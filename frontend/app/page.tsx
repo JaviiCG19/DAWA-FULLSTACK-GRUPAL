@@ -12,10 +12,10 @@ export default function Home() {
           <legend className="fieldset-legend">LogIn</legend>
 
           <label className="label">Username</label>
-          <input type="text" className="input" onChange={(e) => setUsername(e.target.value)} />
+          <input type="text" value={username} className="input" onChange={(e) => setUsername(e.target.value)} />
 
           <label className="label">Password</label>
-          <input type="password" className="input" onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" value={password} className="input" onChange={(e) => setPassword(e.target.value)} />
           <button type="submit" className="btn">Default</button>
         </fieldset>
       </form>
