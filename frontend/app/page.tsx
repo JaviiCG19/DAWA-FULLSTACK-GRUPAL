@@ -1,20 +1,24 @@
-import Image from "next/image";
-
+"use client";
+import { useLogin } from './hooks/useLogin'
 export default function Home() {
+  const { username, password, setPassword, setUsername, handleLogin, error } = useLogin()
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
-      <figure>
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          alt="Shoes" />
-      </figure>
-      <div className="card-body">
-        <h2 className="card-title">Card Title</h2>
-        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
-        </div>
-      </div>
+    <div className='flex items-center justify-center min-h-screen'>
+      {error !== null && (
+        <p>{error}</p>
+      )}
+      <form onSubmit={(e) => { e.preventDefault(); handleLogin }}>
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">LogIn</legend>
+
+          <label className="label">Username</label>
+          <input type="text" className="input" onChange={(e) => setUsername(e.target.value)} />
+
+          <label className="label">Password</label>
+          <input type="password" className="input" onChange={(e) => setPassword(e.target.value)} />
+          <button type="submit" className="btn">Default</button>
+        </fieldset>
+      </form>
     </div>
   );
 }

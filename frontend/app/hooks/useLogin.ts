@@ -1,7 +1,6 @@
 "use client";
-
 import { useState } from "react";
-import { login } from "@/services/loginService";
+import  {logIn}  from "@/services/logInService";
 
 export const useLogin = () => {
   const [username, setUsername] = useState("");
@@ -19,7 +18,7 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const response = await login(username, password);
+      const response = await logIn(username, password);
       localStorage.setItem("token-app", response.token);
       return true;
     } catch {
