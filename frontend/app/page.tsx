@@ -1,22 +1,51 @@
-"use client";
-import { useLogin } from './hooks/useLogin'
+'use client';
+import { useLogin } from './hooks/useLogin';
+
 export default function Home() {
-  const { username, password, setPassword, setUsername, handleLogin, error } = useLogin()
+  const { username, password, setPassword, setUsername, handleLogin, error, loading } = useLogin();
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
   return (
-    <div className='flex items-center justify-center min-h-screen'>
-      {error !== null && (
-        <p>{error}</p>
-      )}
-      <form onSubmit={(e) => { e.preventDefault(); handleLogin }}>
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend">LogIn</legend>
+    <div className='flex items-center justify-center min-h-screen bg-base-300'>
+      <form onSubmit={onSubmit}>
+        <fieldset className='fieldset bg-base-200 border-base-300 rounded-xl w-100 h-80 border p-6 shadow-xl'>
+          <legend className='fieldset-legend text-lg font-bold'>Iniciar Sesión</legend>
 
-          <label className="label">Username</label>
-          <input type="text" value={username} className="input" onChange={(e) => setUsername(e.target.value)} />
+          {error && (
+            <div className='alert alert-error mb-4'>
+              <span>{error}</span>
+            </div>
+          )}
 
-          <label className="label">Password</label>
-          <input type="password" value={password} className="input" onChange={(e) => setPassword(e.target.value)} />
-          <button type="submit" className="btn">Default</button>
+          <label className='label'>
+            <span className='label-text'>Usuario</span>
+          </label>
+          <input
+            type='text'
+            value={username}
+            className='input input-bordered w-full'
+            placeholder='Ingresa tu usuario'
+            onChange={e => setUsername(e.target.value)}
+          />
+
+          <label className='label mt-2'>
+            <span className='label-text'>Contraseña</span>
+          </label>
+          <input
+            type='password'
+            value={password}
+            className='input input-bordered w-full'
+            placeholder='Ingresa tu contraseña'
+            onChange={e => setPassword(e.target.value)}
+          />
+
+          <button type='submit' className='btn btn-primary w-full mt-6' disabled={loading}>
+            {loading ? <span className='loading loading-spinner loading-sm'></span> : 'Ingresar'}
+          </button>
         </fieldset>
       </form>
     </div>
