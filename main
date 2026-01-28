@@ -1,0 +1,7 @@
+echo "# DAWA-FULLSTACK-GRUPAL" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/JaviiCG19/DAWA-FULLSTACK-GRUPAL.git
+git push -u origin main
