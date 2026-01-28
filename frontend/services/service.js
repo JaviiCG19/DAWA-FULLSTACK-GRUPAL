@@ -1,12 +1,16 @@
 import axios from "axios"
 
-function obtener(ruta) {
-    return axios.get(ruta).then(
+function unwrap_promise(promise) {
+    return promise.then(
         (res) => { return res },
-        (err) => { return { 'error': error } }
+        (err) => { return { error: err } }
     )
 }
 
-function listar_provincia() { return obtener('/api/provincia') }
-function listar_cant(provincia) { return obtener('/api/cantones/listar/' + provincia)  }
+function listar_provincia() { 
+    return unwrap_promise(axios.get('/provincia/listar'))
+}
 
+function listar_cantones(codprov) {
+    return unwrap_promise(axios.get('/cantones/listar', { params: { codprov: codprov } }))
+}
