@@ -1,0 +1,9 @@
+services:
+  dawa:
+    container_name: dawa_ws
+    image: 'dawa_ws_image:latest'
+    restart: always
+    ports:
+      - '1001:1001'
+    volumes:
+      - c:/JCCR/data/LOGS/dawa_ws:/app/dawa/src/utils/general/LOGS
