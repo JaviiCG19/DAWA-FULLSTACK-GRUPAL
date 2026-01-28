@@ -1,16 +1,18 @@
-"use client";
-import { useState } from "react";
-import  {logIn}  from "@/services/logInService";
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { loginService } from '@/services/authService';
 
 export const useLogin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleLogin = async () => {
     if (!username || !password) {
-      setError("Complete todos los campos");
+      setError('Complete todos los campos');
       return false;
     }
 
@@ -18,11 +20,18 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const response = await logIn(username, password);
-      localStorage.setItem("token-app", response.token);
-      return true;
+      const response = await loginService(username, password);
+      if (response.result) {
+        localStorage.setItem('token-app', response.data);
+        localStorage.setItem('isAuthenticated', 'true');
+        router.push('/dashboard');
+        return true;
+      } else {
+        setError(response.message || 'Error al iniciar sesión');
+        return false;
+      }
     } catch {
-      setError("Credenciales incorrectas");
+      setError('Error al conectar con el servidor');
       return false;
     } finally {
       setLoading(false);
@@ -36,6 +45,6 @@ export const useLogin = () => {
     setPassword,
     handleLogin,
     loading,
-    error
+    error,
   };
 };
