@@ -9,7 +9,9 @@ from src.api.Routes.routes import load_routes
 from src.utils.general.logs import HandleLogs
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}},
+     allow_headers=["Content-Type", "tokenapp"],
+     expose_headers=["tokenapp"])
 api = Api(app)
 load_routes(api)
 
@@ -19,7 +21,7 @@ API_URL = '/static/swagger.json'
 
 SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(SWAGGER_URL, API_URL,
                                               config={
-                                                  'app_name': 'dawa-ws-restfulapi'
+                                                  'app_name': 'dawa-ws-restfullapi'
                                               })
 
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
